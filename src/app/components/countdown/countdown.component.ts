@@ -21,12 +21,18 @@ export class CountdownComponent implements OnInit, OnDestroy {
     const counter$: Observable<number> = interval(1000).pipe(
       map(_ => {
         this.passed = (future.getTime() < new Date().getTime()) ? true : false;
+        if (this.passed) {
+          return -1;
+        }
         return Math.floor((future.getTime() - new Date().getTime()) / 1000);
       }));
     this.subscription = counter$.subscribe((x) => {
-      const temp = this.dhms(x);
-
-      this.messageString = (temp.search('NaN') === -1) ? temp : `ERR: 'Counter' failed`;
+      if (x === -1) {
+        this.messageString = '00:00:00';
+      } else {
+        const temp = this.dhms(x);
+        this.messageString = (temp.search('NaN') === -1) ? temp : `ERR: 'Counter' failed`;
+      }
     });
   }
 
@@ -34,7 +40,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  dhms(t) {
+  dhms(t: number) {
     let days: number;
     let hours: number;
     let minutes: number;

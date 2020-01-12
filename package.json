@@ -49,6 +49,13 @@
       "compiler": "bit.envs/compilers/angular@0.2.0"
     },
     "componentsDefaultDirectory": "components/{name}",
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "overrides": {
+      "admiralfeb.ng-common-components/countdown": {
+        "env": {
+          "compiler": "bit.envs/compilers/angular@0.2.0"
+        }
+      }
+    }
   }
 }
